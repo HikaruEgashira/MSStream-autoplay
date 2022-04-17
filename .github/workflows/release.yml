@@ -1,0 +1,26 @@
+env:
+  DIRECTORY: distribution
+
+# FILE GENERATED WITH: npx ghat fregante/ghatemplates/webext
+# SOURCE: https://github.com/fregante/ghatemplates
+
+name: Release
+on: push
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@646cdf48217256a3d0b80361c5a50727664284f2
+        with:
+          version: 6.32.7
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: extension
+          path: extension
